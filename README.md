@@ -3,6 +3,12 @@
  This project is a visualization of the most popular optimization algorithms used in machine learning.
  The goal of this project was to visually learn the differences between the optimization algorithms and which one might be suited for a particular problem.
 
+
+## Demo Video
+[![Project Demo](https://youtu.be/wnicogJJn1g)](https://youtu.be/wnicogJJn1g)
+
+
+
 ## How to run
 - Clone the repository
 - Install the requirements from the `requirements.txt` file
