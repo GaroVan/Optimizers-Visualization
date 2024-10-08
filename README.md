@@ -5,7 +5,7 @@
 
 
 ## Demo Video
-[![Project Demo](https://youtu.be/wnicogJJn1g)](https://youtu.be/wnicogJJn1g)
+[![Project Demo](https://img.youtube.com/vi/wnicogJJn1g/0.jpg)](https://www.youtube.com/watch?v=wnicogJJn1g)
 
 
 
