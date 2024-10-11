@@ -1,8 +1,9 @@
- # Machine Learning Optmizers Visualization
- ## About the project
- This project is a visualization of the most popular optimization algorithms used in machine learning.
- The goal of this project was to visually learn the differences between the optimization algorithms and which one might be suited for a particular problem.
+# Machine Learning Optmizers Visualization
+## About the project
+An interactive visualization of the most popular optimization algorithms used in machine learning.
+The goal of this project was to visually learn the differences between the optimization algorithms and which one might be suited for a particular problem.
 
+![Demo](./assets/gifs/all%20demo%20places.gif)
 
 ## Demo Video
 [![Project Demo](https://img.youtube.com/vi/wnicogJJn1g/0.jpg)](https://www.youtube.com/watch?v=wnicogJJn1g)
@@ -15,10 +16,10 @@
     - `pip install -r requirements.txt`
 - Run the main.py file
     - You can change the terrain by changing the `CHOSEN_FUNCTION` variable in the `params.py` file
-    - the starting point of the optimizers can also be changed in the `main` function in the `main.py` file
+    - The starting point of the optimizers can also be changed in the `main.py` file
 
 ## Optimizers
-This project currently supports the following optimizers:
+Currently supports the following optimizers:
 - Gradient Descent
 - Momentum
 - Nesterov Accelerated Gradient

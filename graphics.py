@@ -8,6 +8,16 @@ from classes.Optimizer import Optimizer
 def normalize(x, x_min, x_range):
     return (x - x_min) / x_range
 
+def num_to_place(place:int)->str:
+    if place == 1:
+        return "1st"
+    elif place == 2:
+        return "2nd"
+    elif place == 3:
+        return "3rd"
+    else:
+        return f"{place}th"
+
 
 class Graphics:
     def __init__(self, surface:Surface):
@@ -26,7 +36,7 @@ class Graphics:
                                       retain=40)
                             )
     
-    def labeling(self)-> None:
+    def show_labels(self)-> None:
         y_min, y_max = self.surface.y_min, self.surface.y_max
         x_min, x_max = self.surface.x_min, self.surface.x_max
         n = len(self.optimizers)
@@ -34,6 +44,12 @@ class Graphics:
         for i, optim in enumerate(self.optimizers):
             vp.sphere(pos=vp.vector(i * gap + x_min, y_min - 5, 0), radius=0.5, color=optim.color)
             vp.text(text=f'{optim}', pos=vp.vector(i * gap + x_min + 1, y_min - 5, 0), height=0.5, color=optim.color)
+
+    def add_to_leaderboard(self, optimizer_name:str, place:int, color:vp.color)-> None:
+        x = self.surface.x_max + 5
+        y = self.surface.y_max - 5 - 2 * place
+        vp.text(text=f'{num_to_place(place)}: ', pos=vp.vector(x, y, 0), height=0.7, color=vp.color.black)
+        vp.text(text=optimizer_name, pos=vp.vector(x + 2, y, 0), height=0.7, color=color)
 
     def plot_surface(self, colormap:str='viridis')-> None:
         """

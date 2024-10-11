@@ -9,6 +9,8 @@ from classes import Optimizer
 from classes import Surface
 
 
+
+
 vp.scene.caption = f'''
     Press the Play button to start the optimization process.
     Right click/ctrl+click to rotate the camera
@@ -58,13 +60,15 @@ if __name__ == '__main__':
     rendering.add_optimizer(rmsprop)
     rendering.add_optimizer(adam)
 
-    rendering.labeling()
+    rendering.show_labels()
     
     t = 0
+    winner_optimizers = 0
+
     while True:
-        vp.rate(20)
+        vp.rate(30)
         while is_paused:
-            vp.rate(20)
+            vp.rate(30)
 
         del_v = []
         t += params.dt
@@ -76,13 +80,15 @@ if __name__ == '__main__':
         rendering.render_optimizers()
 
         if any([v < 1e-4 for v in del_v]):
-            # write something on the canvas
             idx = np.argmin(del_v)
-            optim = rendering.optimizers[idx]
-            p = optim.position
-            vp.text(text=f'Local minimum reached by {optim}!', pos=vp.vector(p.x, p.y, p.z + 20), height=0.5, color=vp.color.black)
-            time.sleep(20)
-            break
-        
+            optim_str = repr(rendering.optimizers[idx])
+            optim_color = rendering.optimizers[idx].color
+            winner_optimizers += 1
+            rendering.add_to_leaderboard(optim_str, place=winner_optimizers, color=optim_color)
+            rendering.optimizers.pop(idx)
+            
+
         if t > params.T:
+            vp.text(text="Time's up!", pos=vp.vector(0, 0, 0), height=2, color=vp.color.black)
+            time.sleep(5)
             break
