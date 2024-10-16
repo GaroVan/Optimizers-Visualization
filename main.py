@@ -34,17 +34,15 @@ def toggle_pause():
 if __name__ == '__main__':
     vp.canvas(background=vp.vector(0.9, 0.9, 0.9), width=800, height=800)
 
-
     global pause_button
     pause_button = vp.button(text="Play", bind=lambda: toggle_pause())
     
-
     surface = Surface.Surface(params.CHOSEN_FUNCTION, params.X_MIN, params.X_MAX, params.Y_MIN, params.Y_MAX)
     rendering = graphics.Graphics(surface)
     rendering.plot_surface()
     
-    start_x = -11
-    start_y = -13
+    start_x = params.START_X
+    start_y = params.START_Y
     
     graddesc = Optimizer.GradientDescent(start_x, start_y, surface=surface, lr=params.LEARNING_RATE, color=vp.color.red)
     momentum = Optimizer.Momentum(start_x, start_y, surface=surface, lr=params.LEARNING_RATE, color=vp.color.blue, gamma=0.95)
@@ -63,7 +61,7 @@ if __name__ == '__main__':
     rendering.show_labels()
     
     t = 0
-    winner_optimizers = 0
+    winner_optimizers = 0   # for leaderboard positions
 
     while True:
         vp.rate(30)
@@ -76,18 +74,22 @@ if __name__ == '__main__':
         for optim in rendering.optimizers:
             del_v.append(optim.step())
 
-
         rendering.render_optimizers()
 
+        # code for the leaderboard
         if any([v < 1e-4 for v in del_v]):
+            # if an optimizer makes sufficiently small steps, it is considered to have converged
+            # get information of the converged optimizer
             idx = np.argmin(del_v)
             optim_str = repr(rendering.optimizers[idx])
             optim_color = rendering.optimizers[idx].color
+            # add the converged optimizer to the leaderboard
             winner_optimizers += 1
             rendering.add_to_leaderboard(optim_str, place=winner_optimizers, color=optim_color)
             rendering.optimizers.pop(idx)
             
 
+        # stopping the simulation
         if t > params.T:
             vp.text(text="Time's up!", pos=vp.vector(0, 0, 0), height=2, color=vp.color.black)
             time.sleep(5)

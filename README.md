@@ -16,7 +16,9 @@ The goal of this project was to visually learn the differences between the optim
     - `pip install -r requirements.txt`
 - Run the main.py file
     - You can change the terrain by changing the `CHOSEN_FUNCTION` variable in the `params.py` file
-    - The starting point of the optimizers can also be changed in the `main.py` file
+    - To define a new terrain, write a new function that will take in (x, y, xmin, xmax, ymin, ymax) and return the z value. You can assign the new function in the `CHOSEN_FUNCTION` variable in the `params.py` file to see it in action.
+    - The `params.py` file also contains the bounds for the terrain, the initial point for the optimization algorithm, and the learning rate for the optimization algorithm. You can change them as you wish and re run the code to see the changes.
+    - You can also change the parameters of the optimization algorithms by changing the lines in the `main.py` file where the optimizer objects are created. 
 
 ## Optimizers
 Currently supports the following optimizers:

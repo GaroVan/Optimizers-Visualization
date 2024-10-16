@@ -5,7 +5,7 @@ from .vector import vector
 from .Surface import Surface
 
 class Optimizer:
-    def __init__(self, position_x, position_y, *, surface:Surface, lr:float, color:vp.color):
+    def __init__(self, position_x, position_y, *, surface:Surface, lr:float, color:vp.color)->None:
         self.position = vector(position_x, position_y, surface.get_z(position_x, position_y))
         self.velocity = vector()
         self.surface = surface
@@ -13,7 +13,11 @@ class Optimizer:
         self.color = color
         self.losses = []
 
-    def step(self):
+    def step(self)->float:
+        '''
+        updates the x and y position of the optimizer according to the optimization algorithm.
+        returns the length of the velocity vector
+        '''
         raise NotImplementedError
     
     def __repr__(self) -> str:
@@ -44,7 +48,7 @@ class Momentum(Optimizer):
         assert 0 <= gamma <= 1, 'gamma must be in the range [0, 1]'
         self.gamma = gamma
 
-    def step(self)-> float:
+    def step(self)->float:
         gradient_x, gradient_y = self.surface.derivative(self.position.x, self.position.y)
         self.velocity.x = self.gamma * self.velocity.x - gradient_x * self.lr
         self.velocity.y = self.gamma * self.velocity.y - gradient_y * self.lr
