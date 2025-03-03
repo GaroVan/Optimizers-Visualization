@@ -45,7 +45,7 @@ class GradientDescent(Optimizer):
     def __repr__(self) -> str:
         return f'GD'
 
-
+### This is the optimizer we discussed in class
 class StochGradDesc(Optmimizer):
      def __init__(self, position_x, position_y, *, surface:Surface, lr:float, color:vp.color, batch_size=1):
           super().__init__(position_x, position_y, surface=surface, lr=lr, color=color)
