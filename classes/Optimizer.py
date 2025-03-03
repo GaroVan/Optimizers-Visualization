@@ -42,6 +42,25 @@ class GradientDescent(Optimizer):
         return f'GD'
 
 
+class StochGradDesc(Optmimizer):
+     def __init__(self, position_x, position_y, *, surface:Surface, lr:float, color:vp.color, batch_size=1):
+          super().__init__(position_x, position_y, surface=surface, lr=lr, color=color)
+          self.batch_size=batch_size #Number of batches in each iteration
+
+    def step(self)-> float:
+        batch_x, batch_y=self.surface.get_random_sample(self.batch_size)
+        gradient_x, gradient_y = self.surface.derivative(batch_x, batch_y)
+
+        self.velocity.x = - gradient_x * self.lr
+        self.velocity.y = - gradient_y * self.lr
+        self.position.x = self.position.x + self.velocity.x
+        self.position.y = self.position.y + self.velocity.y
+        self.position.z = self.surface.get_z(self.position.x, self.position.y)
+
+        return self.velocity.length()
+    def _repr_(self)->str:
+        return f'SGD (batch_size={self.batch_size})'
+
 class Momentum(Optimizer):
     def __init__(self, position_x, position_y, *, surface:Surface, lr:float, color:vp.color, gamma:float):
         super().__init__(position_x, position_y, surface=surface, lr=lr, color=color)
