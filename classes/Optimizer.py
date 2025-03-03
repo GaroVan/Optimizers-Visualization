@@ -59,7 +59,7 @@ class StochGradDesc(Optmimizer):
 
         return self.velocity.length()
     def _repr_(self)->str:
-        return f'SGD (batch_size={self.batch_size})'
+        return f'SGD'
 
 class Momentum(Optimizer):
     def __init__(self, position_x, position_y, *, surface:Surface, lr:float, color:vp.color, gamma:float):
