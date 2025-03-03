@@ -45,7 +45,7 @@ class GradientDescent(Optimizer):
     def __repr__(self) -> str:
         return f'GD'
 
-### This is the optimizer we discussed in class
+### In case the question meant the stochastic gradient optimizer
 class StochGradDesc(Optmimizer):
      def __init__(self, position_x, position_y, *, surface:Surface, lr:float, color:vp.color, batch_size=1):
           super().__init__(position_x, position_y, surface=surface, lr=lr, color=color)
@@ -187,4 +187,40 @@ class Adam(Optimizer):
 
     def __repr__(self) -> str:
         return f'Adam'
+
+
+#Here is the Normalized gradients Optimizer
+
+class Normalized(Optimizer):
+    def __init__(self, position_x, position_y, *, surface:Surface, lr:float, color:vp.color):
+        super().__init__(position_x, position_y, surface=surface, lr=lr, color=color)
+        self.t = 1
+        self.sum_grad_x = 0
+        self.sum_grad_y = 0
+        self.sum_square_grad_x = 0
+        self.sum_square_grad_y = 0
+    
+    def step(self)->float:
+        self.t += 1
+        grad_x, grad_y = self.surface.derivative(self.position.x, self.position.y)
+        self.sum_grad_x = grad_x
+        self.sum_grad_y = grad_y
+        self.sum_square_grad_x =  grad_x ** 2
+        self.sum_square_grad_y =  grad_y ** 2
+
+      
+        self.velocity.x = - self.sum_grad_x * self.lr / np.sqrt(self.sum_square_grad_x + 1e-8)
+        self.velocity.y = - self.sum_grad_y  * self.lr / np.sqrt(self.sum_square_grad_y + 1e-8)
+
+        self.position.x = self.position.x + self.velocity.x
+        self.position.y = self.position.y + self.velocity.y
+        self.position.z = self.surface.get_z(self.position.x, self.position.y)
+
+        return self.velocity.length()
+
+    def __repr__(self) -> str:
+        return f'Norm'
+
+
+
 
