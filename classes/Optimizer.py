@@ -1,3 +1,6 @@
+# Garik Avagyan
+
+
 # import vector
 import numpy as np
 import vpython as vp
